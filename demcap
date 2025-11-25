@@ -1,0 +1,39 @@
+Code:
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int t, n, m;
+    cin >> t;
+    while (t--) {
+        cin >> n >> m;
+        vector<int> a(n), b(m);
+        for (int i = 0; i < n; i++) cin >> a[i];
+        for (int i = 0; i < m; i++) cin >> b[i];
+        sort(b.begin(), b.end());
+        int cnt0 = count(b.begin(), b.end(), 0);
+        int cnt1 = count(b.begin(), b.end(), 1);
+        int cnt2 = count(b.begin(), b.end(), 2);
+        int cnt3 = count(b.begin(), b.end(), 3);
+        int cnt4 = count(b.begin(), b.end(), 4);
+        long long dem = 0;
+        for (int x : a) {
+            if (x == 0) continue; 
+            if (x == 1) {
+                dem += cnt0;
+                continue;
+            }
+            auto it = upper_bound(b.begin(), b.end(), x);
+            dem += (m - (it - b.begin()));
+            dem += cnt0 + cnt1;
+            if (x == 2) {
+                dem -= (cnt3 + cnt4);
+            }
+            if (x == 3) {
+                dem += cnt2;
+            }
+        }
+        cout << dem << "\n";
+    }
+    return 0;
+}
