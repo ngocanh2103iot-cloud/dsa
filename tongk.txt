@@ -1,0 +1,56 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+int n,a[1005],ok=1,k;
+void ktao(){
+    for(int i=1;i<=k;i++)
+        a[i]=0;
+}
+void sinh(){
+    int i=n;
+    while(i>0 && a[i]!=0) {
+            a[i]=0;
+            i--;
+    }
+    if(i==0) ok=0;
+    else{
+        a[i]=1;
+    }
+}
+int main()
+{
+    int t;cin>>t;
+    while(t--){
+    ok=1;int ok1=1;
+    cin>>n>>k;
+    int b[n+1];
+    for(int i=1;i<=n;i++) cin>>b[i];
+    sort(b+1,b+n+1);
+    ktao();
+    vector<vector<int>> v;;
+    while(ok){
+        int s=0;
+        for(int i=1;i<=n;i++)
+            if(a[i]) s+=b[i];
+        if(s==k) {
+            vector<int> temp;
+            for(int i=1;i<=n;i++)
+                if(a[i]) temp.push_back(b[i]);
+            v.push_back(temp);
+            temp.clear();
+            ok1=0;
+        }
+        sinh();
+    }
+    sort(v.begin(),v.end());
+     if(ok1) {cout<<-1<<endl;continue;}
+     for (auto &subset : v) {
+            cout<<'[';
+            for(int i=0;i<subset.size();i++) (i<subset.size()-1) ? cout<<subset[i]<<" " : cout<<subset[i];
+            cout<<"] ";
+        }
+        v.clear();
+        cout<<endl;
+}
+        return 0;
+}

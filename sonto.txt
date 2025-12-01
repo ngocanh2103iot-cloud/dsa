@@ -1,0 +1,60 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+int n,p,s,a[200],k,ok=1;
+vector<int> v;
+vector<vector<int>> kq;
+void ktao(){
+    for(int i=1;i<=k;i++)
+        a[i]=i;
+}
+void sinh(){
+    int i=k;
+    while(i>0 && a[i]==n-k+i) {
+            i--;
+    }
+    if(i==0) ok=0;
+    else{
+        a[i]++;
+        for(int j=i+1;j<=k;j++) a[j]=a[j-1]+1;
+    }
+}
+bool ktra(int n){
+    if(n<=1) return false;
+    if(n==2||n==3) return true;
+    for(int i=2;i<=sqrt(n);i++) if(n%i==0) return false;
+    return true;
+}
+int main()
+{
+    int t;cin>>t;
+    while(t--){
+    cin>>k>>p>>s;
+    for(int i=p+1;i<=s-1;i++)
+        if(ktra(i)) v.push_back(i);
+    n=v.size();
+    if(n<k) {cout<<0<<endl;continue;}
+    ktao();ok=1;
+    while(ok){
+        int sum=0;
+        for(int i=1;i<=k;i++)
+            sum+=v[a[i]-1];
+        if(sum==s) {
+            vector<int> temp;
+            for(int i=1;i<=k;i++) temp.push_back(v[a[i]-1]);
+            kq.push_back(temp);
+            temp.clear();
+        }
+        sinh();
+    }
+    sort(kq.begin(), kq.end());
+    cout<<kq.size()<<endl;
+    for(auto &temp:kq){
+        for(auto x:temp) cout<<x<<" ";
+        cout<<endl;
+    }
+    v.clear();
+    kq.clear();
+    }
+    return 0;
+}
